@@ -8,9 +8,14 @@ app = Flask(__name__)
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values.get('Body', '').lower()
+    # print(request.values)
+    userid = request.values.get('WaId', None)
     print('CHEGOU:', incoming_msg)
     resp = MessagingResponse()
     msg = resp.message()
+    if userid is None:
+        msg.body('Não falo com estranhos')
+        return str(resp)
     responded = False
     if 'quote' in incoming_msg:
         # return a quote
@@ -25,6 +30,7 @@ def bot():
         print(1, quote)
     if 'cat' in incoming_msg:
         # return a cat pic
+        msg.body(f'{userid} solicitou gatos')
         msg.media('https://cataas.com/cat')
         responded = True
         print(2)

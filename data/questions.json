@@ -1,0 +1,27 @@
+{
+    "f1": {
+        "text": "O primeiro vídeo da Kizzy no canal era sobre que tema?",
+        "category": "fã",
+        "alternatives": ["Análise de Dados", "Programação para Crianças", "Desenvolvimento Android", "Algoritmos"]
+    },
+
+    "t1": {
+        "text": "O código a seguir representa uma simulação de ... ?",
+        "category": "tech",
+        "alternatives": ["Ray tracing", "Jogo da velha", "Pedra, Papel e Tesoura", ""],
+        "media_url": "data/img/t1.png" 
+    },
+
+    "t2": {
+        "text": "A classe de modelos de deep learnin conhecida como GAN, caracteriza-se por ser capaz de... ?",
+        "category": "tech",
+        "alternatives": ["Identificar objetos", "Garantir parâmetros éticos", "Vencer jogos contra humanos", "Gerar conteúdos como imagens"]
+    },
+
+    "m1": {
+        "text": "Em que os selos de membros do canal Programação Dinâmica foram inspirados?",
+        "category": "membros",
+        "alternatives": ["Sistema solar", "Faixas do Karatê", "Faixas do Taekwondo", "Naruto"]
+    }
+
+}
