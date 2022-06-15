@@ -2,7 +2,7 @@ from .botmessages import Replies
 from .persistence import LocalPersistence
 from pathlib import Path
 
-BASE_DIR = Path(".").parents[0]
+BASE_DIR = Path(".").absolute().parents[0]
 DATA_DIR = BASE_DIR.joinpath('data')
 
 class BotOptions:
