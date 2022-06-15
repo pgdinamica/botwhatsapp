@@ -66,7 +66,8 @@ class QuizzManager:
                     botresponse = Replies.display_question(question)
             elif message == 'r':
                 topN = self.persistence.retrieve_ranking()
-                botresponse = Replies.ranking(topN)
+                botresponse = (Replies.ranking(topN) if len(topN) > 0 
+                                else Replies.no_ranking())
             elif message in BotOptions.ALTERNATIVES:
                 botresponse = self.continue_quizz(userdata, message)
             elif message == BotOptions.REBOOT_QUIZZ:

@@ -38,7 +38,7 @@ class Replies:
         for i, pair in enumerate(topN):
             s = s + f'{prize[i]}. {pair[0]} - {pair[1]} pontos\n'
         warning = 'Envie **V para voltar ao menu inicial ou **P** para retomar o quizz.'
-        s = s + f'{txt}\n{str(warning)}'
+        s = s + f'\n{warning}'
         return {'body': s}
     
     def no_ranking():
