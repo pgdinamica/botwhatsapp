@@ -24,7 +24,7 @@ class Replies:
     def next_question(points, question):
         txt = 'Acertou! 👏🏾👏🏾👏🏾' if points > 0 else 'Errou'
         txt = f'{txt}\n{str(question)}'
-        return {'body': txt}
+        return {'body': txt, 'media': question.media_url}
 
     def user_registered():
         return {'body': 'Show! Escolha **P** para receber a próxima pergunta e **R** para ver o ranking'}

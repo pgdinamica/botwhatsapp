@@ -29,7 +29,8 @@
         "text": "Em que os selos de membros do canal Programação Dinâmica foram inspirados?",
         "category": "membros",
         "alternatives": ["Sistema solar", "Faixas do Karatê", "Faixas do Taekwondo", "Naruto"],
-        "answer": 1
+        "answer": 1,
+        "media_url": "https://raw.githubusercontent.com/pgdinamica/botwhatsapp/main/data/img/icon1.png"
     }
 
 }
