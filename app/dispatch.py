@@ -4,6 +4,8 @@ from pathlib import Path
 
 BASE_DIR = Path(".").absolute().parents[0]
 DATA_DIR = BASE_DIR.joinpath('data')
+USER_DIR = DATA_DIR.joinpath('users')
+USER_DIR.mkdir(parents=True, exist_ok=True)
 
 class BotOptions:
     QUIZZ = "1"

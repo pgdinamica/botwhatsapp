@@ -79,10 +79,6 @@ class LocalPersistence(BasePersistence):
         return True
 
     def is_registered_user(self, userid):
-        usersdir = os.path.join(self.basedir, 'users')
-        if not os.path.exists(usersdir):
-            os.makedirs(usersdir)
-            
         if os.path.exists(self.userfilepath(userid)):
             return True
         return False
