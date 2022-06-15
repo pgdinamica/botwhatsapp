@@ -44,7 +44,8 @@ class LocalPersistence(BasePersistence):
         return self._questions
 
     def userfilepath(self, userid):
-        return os.path.join(self.tempdir, 'users', f'{userid}.json')
+        filename = hash(userid)
+        return os.path.join(self.tempdir, 'users', f'{filename}.json')
     
     def load_questions(self):
         with open(os.path.join(self.basedir, QUESTIONS_FILE), 
