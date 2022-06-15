@@ -31,9 +31,10 @@ class BasePersistence:
 
 
 class LocalPersistence(BasePersistence):
-    def __init__(self, datadir) -> None:
+    def __init__(self, datadir, tempdir) -> None:
         super().__init__()
         self.basedir = datadir
+        self.tempdir = tempdir
         self._questions = None
 
     @property
@@ -43,7 +44,7 @@ class LocalPersistence(BasePersistence):
         return self._questions
 
     def userfilepath(self, userid):
-        return os.path.join(self.basedir, 'users', f'{userid}.json')
+        return os.path.join(self.tempdir, 'users', f'{userid}.json')
     
     def load_questions(self):
         with open(os.path.join(self.basedir, QUESTIONS_FILE), 
@@ -95,7 +96,7 @@ class LocalPersistence(BasePersistence):
             userfile.write(data)
 
     def retrieve_ranking(self, topn=5):
-        with open(os.path.join(self.basedir, 'ranking.json'), 'r', 
+        with open(os.path.join(self.tempdir, 'ranking.json'), 'r', 
                     encoding='utf-8') as rankfile:
             rank_dict = json.load(rankfile)
         top = sorted(rank_dict.items(), 
@@ -103,7 +104,7 @@ class LocalPersistence(BasePersistence):
         return top
     
     def update_ranking(self, record):
-        rankpath = os.path.join(self.basedir, 'ranking.json')
+        rankpath = os.path.join(self.tempdir, 'ranking.json')
         if os.path.exists(rankpath):
             fp = open(rankpath, 'r', encoding='utf-8')
             rank_dict = json.load(fp)

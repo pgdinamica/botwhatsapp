@@ -11,7 +11,7 @@
         "id": 2,
         "text": "O código a seguir representa uma simulação de ... ?",
         "category": "tech",
-        "alternatives": ["Ray tracing", "Jogo da velha", "Pedra, Papel e Tesoura", ""],
+        "alternatives": ["Ray tracing", "Jogo da velha", "Pedra, Papel e Tesoura", "Torre de Hanoi"],
         "answer": 0,
         "media_url": "data/img/t1.png" 
     },

@@ -4,7 +4,8 @@ from pathlib import Path
 
 BASE_DIR = Path(".").absolute().parents[0]
 DATA_DIR = BASE_DIR.joinpath('data')
-USER_DIR = DATA_DIR.joinpath('users')
+TEMP_DIR = BASE_DIR.joinpath('temp')
+USER_DIR = TEMP_DIR.joinpath('users')
 USER_DIR.mkdir(parents=True, exist_ok=True)
 
 class BotOptions:
@@ -49,7 +50,7 @@ class QuizzManager:
     ALT_MAP = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
     
     def __init__(self) -> None:
-        self.persistence = LocalPersistence(DATA_DIR)
+        self.persistence = LocalPersistence(DATA_DIR, TEMP_DIR)
         self.questions = []
 
     def reply(self, userid, usermessage):
