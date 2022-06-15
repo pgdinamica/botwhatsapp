@@ -58,7 +58,8 @@ class LocalPersistence(BasePersistence):
                         v['text'], 
                         v['alternatives'], 
                         v['answer'], 
-                        v['category']))
+                        v['category'],
+                        v.get('media_url', None)))
         self._questions = questions
     
     def current_question(self, userdata):
