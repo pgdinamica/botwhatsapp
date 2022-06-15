@@ -73,8 +73,8 @@ def bot():
         botresponse = get_unauth_response()
 
     msg.body(botresponse['body'])
-    # if botresponse.get('media', None):
-    #     msg.media(botresponse['media'])
+    if botresponse.get('media', None):
+        msg.media(botresponse['media'])
     print(str(resp)) #- se quiser ver o formato do XML esperado pela Twilio
     return str(resp)
 
