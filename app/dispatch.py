@@ -1,6 +1,9 @@
 from .botmessages import Replies
 from .persistence import LocalPersistence
+from pathlib import Path
 
+BASE_DIR = Path(".").parents[0]
+DATA_DIR = BASE_DIR.joinpath('data')
 
 class BotOptions:
     QUIZZ = "1"
@@ -39,8 +42,6 @@ class BotDispatcher:
             return self.format(Replies.TWILIO)
         else:
             return self.format(Replies.DEFAULT)
-
-DATA_DIR = 'E:\Workspace\pgdinamica\\twillio\data'
 
 class QuizzManager:
     ALT_MAP = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
