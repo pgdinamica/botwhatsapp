@@ -52,7 +52,7 @@ class QuizzManager:
     def reply(self, userid, usermessage):
         message = usermessage.lower()
         if self.persistence.is_registered_user(userid):
-            userdata = self.persistence.retrieve_userdata(userid)
+            userdata = self.persistence.retrieve_user(userid)
             
             if message == 'p':    
                 question = self.persistence.current_question(userdata)
@@ -65,6 +65,9 @@ class QuizzManager:
                 botresponse = Replies.ranking(topN)
             elif message in BotOptions.ALTERNATIVES:
                 botresponse = self.continue_quizz(userdata, message)
+            elif message == BotOptions.REBOOT_QUIZZ:
+                self.persistence.reboot_user(userdata)
+                botresponse = Replies.reboot_success()
             else:
                 botresponse = Replies.quizz_error()
         else:
@@ -74,14 +77,10 @@ class QuizzManager:
                 botresponse = Replies.user_registered()
             else:
                 botresponse = Replies.unauth_response()
-        # elif message == BotOptions.REGISTER_USER:
-        #     return self.format(Replies.REGISTER_USER)
-        # elif message == BotOptions.REBOOT_QUIZZ:
-        #     return self.format(Replies.REBOOT_QUIZZ)
 
         return botresponse
 
-    def proccess_answer(usermsg):
+    def proccess_answer(self, usermsg):
         answer = usermsg.strip()[-1].upper()
         return QuizzManager.ALT_MAP[answer]
 
@@ -95,19 +94,10 @@ class QuizzManager:
                         'last_question': question.id
         })
         self.persistence.update_user(userdata)
+        record = {userdata['username']: userdata['points']}
+        self.persistence.update_ranking(record)
 
         question = self.persistence.current_question(userdata)
         # acabou o quizz
         return (Replies.quizz_ended(userdata) if question is None 
                 else Replies.next_question(points, question))
-
-
-
-    # def quizz_ended_msg(userdata):
-    #     return {'body': f"Acabou! Sua pontuação: {userdata['points']}", 
-    #             'media': 'https://direct.rhapsody.com/imageserver/images/alb.483471959/500x500.jpg'}
-
-# def next_question_msg(points, question):
-    #     txt = 'Acertou! 👏🏾👏🏾👏🏾' if points > 0 else 'Errou'
-    #     txt = f'{txt}\n{str(question)}'
-    #     return {'body': txt}

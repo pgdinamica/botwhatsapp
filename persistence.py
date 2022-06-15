@@ -8,22 +8,26 @@ QUESTIONS_FILE = 'questions.json'
 class BasePersistence:
     def load_questions(self):
         pass
-    
-    def retrieve_userdata(self, userid):
+    def current_question(self, userdata):
         pass
     
     def register_user(self, userid, username):
         pass
-
+    def is_registered_user(self, userid):
+        pass
+    def retrieve_user(self, userid):
+        pass
     def remove_user(self, userid):
         pass
-
-    def reboot_userdata(self, userdata):
+    def reboot_user(self, userdata):
         pass
-
     def update_user(self, userdata):
         pass
 
+    def retrieve_ranking(self, topn=5):
+        pass
+    def update_ranking(self, record):
+        pass
 
 
 class LocalPersistence(BasePersistence):
@@ -37,6 +41,9 @@ class LocalPersistence(BasePersistence):
         if self._questions is None:
             self.load_questions()
         return self._questions
+
+    def userfilepath(self, userid):
+        return os.path.join(self.basedir, 'users', f'{userid}.json')
     
     def load_questions(self):
         with open(os.path.join(self.basedir, QUESTIONS_FILE), 
@@ -51,7 +58,7 @@ class LocalPersistence(BasePersistence):
                         v['alternatives'], 
                         v['answer'], 
                         v['category']))
-        self._questions
+        self._questions = questions
     
     def current_question(self, userdata):
         current_id = userdata.get('last_question', 0)
@@ -59,10 +66,7 @@ class LocalPersistence(BasePersistence):
             return None
         return self.questions[current_id]
 
-    def userfilepath(self, userid):
-        return os.path.join(self.basedir, 'users', f'{userid}.json')
-
-    def retrieve_userdata(self, userid):
+    def retrieve_user(self, userid):
         fp = open(self.userfilepath(userid), 'r', encoding='utf-8')
         userdata = json.load(fp)
         fp.close()
@@ -75,15 +79,20 @@ class LocalPersistence(BasePersistence):
         return True
 
     def is_registered_user(self, userid):
-        if os.path.exists(os.path.join(self.basedir, f'{userid}.json')):
+        if os.path.exists(self.userfilepath(userid)):
             return True
         return False
 
-    def reboot_userdata(self, userdata):
+    def reboot_user(self, userdata):
         with open(self.userfilepath(userdata['id']), 'w') as cleanfile:
                     json.dump({'id': userdata['id'], 
                                 'username': userdata['username']}, cleanfile) 
         return True
+
+    def update_user(self, userdata):
+        data = json.dumps(userdata)
+        with open(self.userfilepath(userdata['id']), 'w') as userfile:
+            userfile.write(data)
 
     def retrieve_ranking(self, topn=5):
         with open(os.path.join(self.basedir, 'ranking.json'), 'r', 
@@ -92,12 +101,8 @@ class LocalPersistence(BasePersistence):
         top = sorted(rank_dict.items(), 
                         key=lambda x: x[1], reverse=True)[:topn]
         return top
-
-    def update_user(self, userdata):
-        data = json.dumps(userdata)
-        with open(self.userfilepath(userdata['id']), 'w') as userfile:
-            userfile.write(data)
-        
+    
+    def update_ranking(self, record):
         rankpath = os.path.join(self.basedir, 'ranking.json')
         if os.path.exists(rankpath):
             fp = open(rankpath, 'r', encoding='utf-8')
@@ -105,6 +110,6 @@ class LocalPersistence(BasePersistence):
             fp.close()
         else:
             rank_dict = {}
-        rank_dict.update({userdata['username']: userdata['points']})
+        rank_dict.update(record)
         with open(rankpath, 'w') as rankfile:
             json.dump(rank_dict, rankfile)

@@ -3,13 +3,23 @@ class Replies:
     TWILIO = ("https://www.twilio.com/pt-br/", None)
     REGISTER_USER = ("7", None)
     REBOOT_QUIZZ = ('Pronto! **P** para pergunta; **R** para Ranking', None)
-    DEFAULT = ("Padrão", None)
+    DEFAULT = ("Olá, eu me chamo Quizzy 🤓 e por aqui eu posso te ajudar com uma dessas opções:\n1- Quizz do Programação Dinâmica\n2- Mais informações sobre o Programação Dinâmica\n3- Mais informações sobre a Twilio", None)
+
+    def format(reply_pair):
+        text, media = reply_pair
+        r = {'body': text}
+        if media is not None:
+            r['media'] = media
+        return r
 
     def quizz_error():
-        return {'body': 'Não entendi, tente de novo. **P** para pergunta; **R** para Ranking'}
+        return {'body': 'Não entendi a resposta. Por favor, tente novamente. Digite **P** para pergunta; **R** para Ranking'}
 
     def quizz_ended(userdata):
         return {'body': f"Acabou pra ti. Pontuação: {userdata['points']}. Digite **8** se quiser tentar de novo."}
+
+    def reboot_success():
+        return Replies.format(Replies.REBOOT_QUIZZ)
 
     def next_question(points, question):
         txt = 'Acertou! 👏🏾👏🏾👏🏾' if points > 0 else 'Errou'
