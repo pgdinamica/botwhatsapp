@@ -1,27 +1,35 @@
 {
     "f1": {
+        "id": 1,
         "text": "O primeiro vídeo da Kizzy no canal era sobre que tema?",
         "category": "fã",
-        "alternatives": ["Análise de Dados", "Programação para Crianças", "Desenvolvimento Android", "Algoritmos"]
+        "alternatives": ["Análise de Dados", "Programação para Crianças", "Desenvolvimento Android", "Algoritmos"],
+        "answer": 2
     },
 
     "t1": {
+        "id": 2,
         "text": "O código a seguir representa uma simulação de ... ?",
         "category": "tech",
         "alternatives": ["Ray tracing", "Jogo da velha", "Pedra, Papel e Tesoura", ""],
+        "answer": 0,
         "media_url": "data/img/t1.png" 
     },
 
     "t2": {
-        "text": "A classe de modelos de deep learnin conhecida como GAN, caracteriza-se por ser capaz de... ?",
+        "id": 3,
+        "text": "A classe de modelos de deep learning conhecida como GAN, caracteriza-se por ser capaz de... ?",
         "category": "tech",
-        "alternatives": ["Identificar objetos", "Garantir parâmetros éticos", "Vencer jogos contra humanos", "Gerar conteúdos como imagens"]
+        "alternatives": ["Identificar objetos", "Garantir parâmetros éticos", "Vencer jogos contra humanos", "Gerar conteúdos como imagens"],
+        "answer": 3
     },
 
     "m1": {
+        "id": 4,
         "text": "Em que os selos de membros do canal Programação Dinâmica foram inspirados?",
         "category": "membros",
-        "alternatives": ["Sistema solar", "Faixas do Karatê", "Faixas do Taekwondo", "Naruto"]
+        "alternatives": ["Sistema solar", "Faixas do Karatê", "Faixas do Taekwondo", "Naruto"],
+        "answer": 1
     }
 
 }

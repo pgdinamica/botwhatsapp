@@ -11,3 +11,13 @@ class Question:
         self.answer = answer
         self.category = category
         self.media_url = media_url
+
+    def points(self):
+        return 10 
+
+    def __str__(self) -> str:
+        s = f"{self.id}. {self.text}\n"
+
+        for i, opt in enumerate(self.alternatives, start=ord('a')):
+            s = s + f"{chr(i).upper()}) {opt}\n"
+        return s
