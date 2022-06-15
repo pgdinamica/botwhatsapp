@@ -4,6 +4,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 import os
 from question import Question
 import json
+import dispatch
 
 app = Flask(__name__)
 
@@ -116,40 +117,48 @@ def ranking():
 
 REGISTER_CODE = "7"
 
+from dispatch import BotDispatcher
+
 @app.route('/bot', methods=['POST'])
 def bot():
     # print(request.values) - se quiser ver os parâmetros recebidos
     original_msg = request.values.get('Body', '')
     incoming_msg = original_msg.lower()
-    userid = request.values.get('WaId', None)
+
+    dispatcher = BotDispatcher()
+    botresponse = dispatcher.reply(original_msg)
+    if botresponse == BotDispatcher.QUIZZ_FLOW:
+        userid = request.values.get('WaId', None)
+        botresponse = {'body': 'Ainda não tem quizz'}
+
     resp = MessagingResponse()
     msg = resp.message()
-    if user_authenticated(userid):
-        userdata = retrieve_data(userid)
-        questions = load_questions()
-        if incoming_msg == 'p':    
-            question = current_question(userdata, questions)
-            if question is None:
-                botresponse = {'body': f"Acabou pra ti. Pontuação: {userdata['points']}. Digite **8** se quiser tentar de novo."}
-            else:
-                botresponse = {'body': str(question), 'media': question.media_url}
-        elif incoming_msg == 'r':
-            botresponse = ranking()
-        elif incoming_msg == '8':
-            with open(userfilepath(userid), 'w') as cleanfile:
-                json.dump({'id': userid, 
-                            'username': userdata['username']}, cleanfile) 
-            botresponse = {'body': 'Pronto! **P** para pergunta; **R** para Ranking'}
-        elif incoming_msg in ['a', 'b', 'c', 'd']:
-            botresponse = continue_quizz(userdata, incoming_msg, questions)
-        else:
-            botresponse = {'body': 'Não entendi, tente de novo. **P** para pergunta; **R** para Ranking'}
-    else:
-        if incoming_msg[0] == REGISTER_CODE:
-            parts = original_msg.split()
-            botresponse = register_user(userid, parts[1])
-        else:
-            botresponse = get_unauth_response()
+    # if user_authenticated(userid):
+    #     userdata = retrieve_data(userid)
+    #     questions = load_questions()
+    #     if incoming_msg == 'p':    
+    #         question = current_question(userdata, questions)
+    #         if question is None:
+    #             botresponse = {'body': f"Acabou pra ti. Pontuação: {userdata['points']}. Digite **8** se quiser tentar de novo."}
+    #         else:
+    #             botresponse = {'body': str(question), 'media': question.media_url}
+    #     elif incoming_msg == 'r':
+    #         botresponse = ranking()
+    #     elif incoming_msg == '8':
+    #         with open(userfilepath(userid), 'w') as cleanfile:
+    #             json.dump({'id': userid, 
+    #                         'username': userdata['username']}, cleanfile) 
+    #         botresponse = {'body': 'Pronto! **P** para pergunta; **R** para Ranking'}
+    #     elif incoming_msg in ['a', 'b', 'c', 'd']:
+    #         botresponse = continue_quizz(userdata, incoming_msg, questions)
+    #     else:
+    #         botresponse = {'body': 'Não entendi, tente de novo. **P** para pergunta; **R** para Ranking'}
+    # else:
+    #     if incoming_msg[0] == REGISTER_CODE:
+    #         parts = original_msg.split()
+    #         botresponse = register_user(userid, parts[1])
+    #     else:
+    #         botresponse = get_unauth_response()
 
     msg.body(botresponse['body'])
     if botresponse.get('media', None):
@@ -159,7 +168,7 @@ def bot():
 
 @app.route('/')
 def index():
-    return "É isso aqui x 2!"
+    return "É isso aqui x 3!"
 
 if __name__ == '__main__':
     app.run()
