@@ -51,7 +51,7 @@ def continue_quizz(userid, usermsg):
 
 def get_unauth_response():
     return {'body': 'Usuário Desconhecido',
-            'media': 'https://upload.wikimedia.org/wikipedia/commons/0/09/Unknown_curve_animated.gif'
+            'media': 'https://live.staticflickr.com/1828/41997990765_2024b9bacc_b.jpg'
             }
 
 def user_authenticated(userid):
