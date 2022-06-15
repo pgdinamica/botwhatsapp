@@ -33,7 +33,7 @@ class Replies:
         return  {'body': str(question), 'media': question.media_url}
 
     def ranking(topN):
-        s = f"**Ranking (Top {len(topN)})**\n"
+        s = f"**Ranking (Top {len(topN) if len(topN) > 5 else 5})**\n"
         prize = ['🏆', '🥈', '🥉'] + ['👏🏾'] * (len(topN) - 3)
         for i, pair in enumerate(topN):
             s = s + f'{prize[i]}. {pair[0]} - {pair[1]} pontos\n'
