@@ -1,10 +1,9 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from dispatch import BotDispatcher, QuizzManager
+from .dispatch import BotDispatcher, QuizzManager
 
 
 app = Flask(__name__)
-
 
 @app.route('/bot', methods=['POST'])
 def bot():
@@ -30,6 +29,3 @@ def bot():
 @app.route('/')
 def index():
     return "É isso aqui x 3!"
-
-if __name__ == '__main__':
-    app.run()

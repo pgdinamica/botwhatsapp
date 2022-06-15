@@ -1,5 +1,5 @@
-from botmessages import Replies
-from persistence import LocalPersistence
+from .botmessages import Replies
+from .persistence import LocalPersistence
 
 
 class BotOptions:

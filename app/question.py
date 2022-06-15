@@ -1,5 +1,3 @@
-
-
 class Question:
     def __init__(self, id:int, text:str, 
                     alternatives:list, answer: str, 

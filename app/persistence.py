@@ -1,6 +1,6 @@
 import os
 import json
-from question import Question
+from .question import Question
 
 
 QUESTIONS_FILE = 'questions.json'
